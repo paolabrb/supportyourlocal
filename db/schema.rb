@@ -10,9 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_04_01_103948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "businesses", force: :cascade do |t|
+    t.string "name"
+    t.text "info"
+    t.string "email"
+    t.string "url"
+    t.string "snapcode"
+    t.string "category"
+    t.string "address"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "business_id"
+    t.string "user"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_transactions_on_business_id"
+  end
+
+  add_foreign_key "transactions", "businesses"
 end
